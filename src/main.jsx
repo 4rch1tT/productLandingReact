@@ -1,11 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import Header from './components/Header'
+import ProductsPage from './pages/Productspage'
+
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Header />
+    <ProductsPage />
   </StrictMode>,
 )
