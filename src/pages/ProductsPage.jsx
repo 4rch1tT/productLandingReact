@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Product from "../components/Product";
 
 const ProductsPage = () => {
-  const products = [
+  const [products] = useState([
     {
       id: 1,
       title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -270,62 +270,125 @@ const ProductsPage = () => {
         count: 145,
       },
     },
-  ];
+  ]);
+
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  const sortByPrice = () => {
+    const sorted = [...filteredProducts].sort((a, b) => a.price - b.price);
+    setFilteredProducts(sorted);
+  };
+
+  const sortByRating = () => {
+    const sorted = [...filteredProducts].sort(
+      (a, b) => b.rating.rate - a.rating.rate
+    );
+    setFilteredProducts(sorted);
+  };
+
+  const filterByCategory = (category) => {
+    const filtered = products.filter(
+      (product) => product.category === category
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const resetFilters = () => {
+    setFilteredProducts(products);
+  };
+
   return (
     <>
       <Header />
-      <div className="dropdown dropdown-hover mt-18 ml-18">
-        <div
-          tabIndex={0}
-          role="button"
-          className="btn m-1 bg-orange-400 hover:bg-orange-500 text-black"
-        >
-          Sort by
+      <div className="flex gap-4 mt-16 ml-18">
+        <div className="dropdown dropdown-hover">
+          <button
+            tabIndex={0}
+            className="btn m-1 bg-orange-400 hover:bg-orange-500 text-black"
+          >
+            Sort by
+          </button>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+          >
+            <li>
+              <button
+                className="hover:bg-orange-400 hover:text-black"
+                onClick={sortByPrice}
+              >
+                Price
+              </button>
+            </li>
+            <li>
+              <button
+                className="hover:bg-orange-400 hover:text-black"
+                onClick={sortByRating}
+              >
+                Rating
+              </button>
+            </li>
+          </ul>
         </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-        >
-          <li>
-            <a className="hover:bg-orange-400 hover:text-black">price</a>
-          </li>
-          <li>
-            <a className="hover:bg-orange-400 hover:text-black">rating</a>
-          </li>
-        </ul>
-      </div>
 
-      <div className="dropdown dropdown-hover mt-18 ml-10">
-        <div tabIndex={0} role="button" className="btn m-1 bg-orange-400 hover:bg-orange-500 text-black">
-          Filter
+        <div className="dropdown dropdown-hover">
+          <button
+            tabIndex={0}
+            className="btn m-1 bg-orange-400 hover:bg-orange-500 text-black"
+          >
+            Filter
+          </button>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+          >
+            <li>
+              <button
+                className="hover:bg-orange-400 hover:text-black"
+                onClick={() => filterByCategory("men's clothing")}
+              >
+                Men's Clothing
+              </button>
+            </li>
+            <li>
+              <button
+                className="hover:bg-orange-400 hover:text-black"
+                onClick={() => filterByCategory("women's clothing")}
+              >
+                Women's Clothing
+              </button>
+            </li>
+            <li>
+              <button
+                className="hover:bg-orange-400 hover:text-black"
+                onClick={() => filterByCategory("jewelery")}
+              >
+                Jewelery
+              </button>
+            </li>
+            <li>
+              <button
+                className="hover:bg-orange-400 hover:text-black"
+                onClick={() => filterByCategory("electronics")}
+              >
+                Electronics
+              </button>
+            </li>
+          </ul>
         </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-        >
-          <li>
-            <a className="hover:bg-orange-400 hover:text-black">
-              men's clothing
-            </a>
-          </li>
-          <li>
-            <a className="hover:bg-orange-400 hover:text-black">
-              women's clothing
-            </a>
-          </li>
-          <li>
-            <a className="hover:bg-orange-400 hover:text-black">jewelery </a>
-          </li>
-          <li>
-            <a className="hover:bg-orange-400 hover:text-black">electronics</a>
-          </li>
-        </ul>
-      </div>
 
-      <div className=" grid grid-cols-3 gap-6 p-2 mt-4 ml-13">
-        {products.map((product) => {
-          return <Product productData={product} key={product.id} />;
-        })}
+        <button
+          className="btn bg-orange-400 hover:bg-orange-500 text-black m-1"
+          onClick={resetFilters}
+        >
+          Reset
+        </button>
+      </div>
+              {/* need some final tweaking for responsiveness */}
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-74 p-2 m-8">
+        {filteredProducts.map((product) => (
+          <Product productData={product} key={product.id} />
+        ))}
       </div>
     </>
   );
