@@ -297,9 +297,16 @@ const ProductsPage = () => {
     setFilteredProducts(products);
   };
 
+  const handleSearch = (searchQuery) => {
+    const filtered = [...products].filter((product) =>
+      product.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
+
   return (
     <>
-      <Header />
+      <Header onSearch={handleSearch} />
       <div className="flex gap-4 mt-16 ml-18">
         <div className="dropdown dropdown-hover">
           <button
@@ -384,8 +391,8 @@ const ProductsPage = () => {
           Reset
         </button>
       </div>
-              {/* need some final tweaking for responsiveness */}
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-74 p-2 m-8">
+
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-4">
         {filteredProducts.map((product) => (
           <Product productData={product} key={product.id} />
         ))}

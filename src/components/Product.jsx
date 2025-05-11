@@ -3,8 +3,8 @@ import React from "react";
 const Product = (props) => {
   return (
     <>
-      <div className="card bg-base-100 w-74 shadow-sm h-full flex flex-col">
-        <figure className="px-10 pt-10 h-48 flex items-center justify-center">
+      <div className="card bg-base-100 shadow-sm h-full flex flex-col w-full sm:w-auto rounded-lg border-2 border-orange-400 hover:shadow-lg transition duration-300">
+        <figure className="px-4 pt-4 h-48 flex items-center justify-center">
           <img
             src={props.productData.image}
             className="rounded-lg object-contain h-full"
@@ -25,7 +25,7 @@ const Product = (props) => {
             </p>
           </div>
           <div className="card-actions justify-end">
-            <button className="btn bg-orange-400 text-black hover:bg-orange-500 transition duration-300">
+            <button className="btn bg-orange-400 text-black hover:bg-orange-500 transition duration-300" onClick={()=>console.log(props.productData['title'])}>
               Add to Cart
             </button>
           </div>
