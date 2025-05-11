@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import ProductsPage from './pages/Productspage'
+import ProductsPage from './pages/Products-page'
 
 
 
